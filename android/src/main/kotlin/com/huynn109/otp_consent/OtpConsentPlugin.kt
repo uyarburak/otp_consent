@@ -121,7 +121,8 @@ class OtpConsentPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Plugin
     private fun startBroadcastReceiver(result: Result, senderPhoneNumber: String?) {
         SmsRetriever.getClient(mActivity).startSmsUserConsent(senderPhoneNumber)
         smsBroadcastReceiver.injectListener(mActivity, this)
-        mActivity.registerReceiver(smsBroadcastReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
+        // https://support.google.com/faqs/answer/9267555?hl=en&sjid=11340788373093644458-EU
+        mActivity.registerReceiver(smsBroadcastReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION), SmsRetriever.SEND_PERMISSION, null)
         result.success(true)
     }
 
